@@ -1,11 +1,11 @@
+// Input Value
 const data = {
   url: 'https://prior-dashboard.web.app/login',
   user: 'jatupat.jirapraphai@priorsolution.co.th',
   pass: 'Jame23@#',
 
-  // Input Value
   startDate: {
-    day: '17',
+    day: '18',
     month: 'DECEMBER',
     year: '2024'
   },
@@ -16,7 +16,7 @@ const data = {
   },
   halfDay: 'Yes',
   leaveType: 'Business', // Annual , Sick , Business
-  employeeType: 'Outsource' // Permanent , Outsource , Vendor , Trainee
+  employeeType: 'Outsource' // Permanent , Outsource , Vendor , Trainee เหมือนจะ default แล้ว
 };
 
 // Current Date and change format to Month Year
