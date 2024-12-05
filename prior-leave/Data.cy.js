@@ -5,7 +5,7 @@ const data = {
 
   // Input Value
   startDate: {
-    day: '16',
+    day: '17',
     month: 'DECEMBER',
     year: '2024'
   },
