@@ -2,8 +2,8 @@
 
 const { data, formattedCurrentDate ,htmltag: htmlTag} = require('./Data.cy.js');
 
-describe('Leave Request', () => {
-  it('Normal Leave Request', ()=>{
+describe('Cancel Leave Request', () => {
+  it('Cancel Leave Request', ()=>{
 
     // Open Webpage
     cy.visit(data.url)
@@ -16,20 +16,23 @@ describe('Leave Request', () => {
     // Click Leave Menu
     cy.contains(htmlTag.LeaveMenu).click()
 
-    // Open leave popup
-    cy.get(htmlTag.createLeave).click()
+    // Open My Leave Calendar
+    cy.get(htmlTag.myLeaveCalendar).click()
 
-    // Select Start Date
+    cy.log('Dec' + '#LeaveCalendar .calendar-grid'.length)
+
+    // Select Month Year to Cancel
     const selectDate = (day, targetMonth, targetYear) => {
-      cy.get(htmlTag.startDateCalendarPicker).click();
 
     // Check if the Month Year is what we want
       const navigateToTargetDate = () => {
-        cy.get(htmlTag.monthYearOnStartCalendar)
+        cy.get(htmlTag.monthYearOnMyLeave)
           .invoke('text')
           .then((text) => {
+            cy.log(text)
+            cy.log(data.cancelDateFrom.day, data.cancelDateFrom.month, data.cancelDateFrom.year)
             if (!text.includes(targetMonth) || !text.includes(targetYear)) {
-              cy.get(htmlTag.nextButtonOnStartCalendar).click();
+              cy.get(htmlTag.nextButtonOnMyLeave).click();
               navigateToTargetDate(); // Recursive call
             }
           });
@@ -37,65 +40,20 @@ describe('Leave Request', () => {
 
       navigateToTargetDate();
 
-      cy.get(htmlTag.dateOnStart)
-        .contains(day)
-        .click();
-      cy.get(htmlTag.clickOutside).click(0, 0);
+      cy.log('Jan' + '#LeaveCalendar .calendar-grid'.length)
+
+      cy.get('#LeaveCalendar .date.ng-star-inserted span').invoke('text').then((text) => {
+        cy.log(text)
+        const date = Number(text)
+        if (date === htmlTag.data.cancelDateFrom.day){
+          cy.get('#LeaveCalendar .date.ng-star-inserted div div.p-element.event-dot.ng-star-inserted')
+          .trigger('mouseover')
+        }
+      })
+
     };
-    selectDate(data.startDate.day, data.startDate.month, data.startDate.year)
 
-    cy.wait(2000);
-    cy.log('check' + htmlTag.endDateDisable)
-
-    if (data.halfDay === 'Yes') {
-      cy.get(htmlTag.halfDay).click()
-      cy.get(htmlTag.endDateDisable).should('have.attr', 'disabled');
-      cy.log('Half Day is selected; skipping end date selection.');
-    } else {
-    //Select End Date
-      const selectEndDate = (day, targetEndMonth, targetEndYear) => {
-        cy.get(htmlTag.endDateCalendarPicker).click();
-
-    // Check if the Month Year is what we want
-        const navigateToTarget = () => {
-          cy.get(htmlTag.monthYearOnEndCalendar)
-            .invoke('text')
-            .then((text) => {
-              if (!text.includes(targetEndMonth) || !text.includes(targetEndYear)) {
-                cy.get(htmlTag.nextButtonOnEndCalendar).click();
-                navigateToTarget(); // Recursive call
-              }
-            });
-        };
-    
-        navigateToTarget();
-
-        cy.get(htmlTag.dateOnEnd)
-          .contains(day)
-          .click();
-        cy.get(htmlTag.clickOutside).click(0, 0);
-      };
-      selectEndDate(data.endDate.day , data.endDate.month , data.endDate.year)
-    }
-
-    cy.wait(2000);
-
-    // Select Leave Type
-    cy.contains('label', data.leaveType)
-    .parent() // Move to the parent element
-    .find(htmlTag.radioButton) // Locate the radio button within the parent
-    .check()
-    .should('be.checked');
-
-    // Select Employee Type
-    cy.contains('label', data.employeeType)
-    .parent() // Move to the parent element
-    .find(htmlTag.radioButton) // Locate the radio button within the parent
-    .check()
-    .should('be.checked');
-
-    // Submit Request
-    // cy.contains('Submit').click()
+    selectDate(data.cancelDateFrom.day, data.cancelDateFrom.month, data.cancelDateFrom.year)
 
 
     });

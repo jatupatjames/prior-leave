@@ -1,9 +1,14 @@
 // Input Value
 const data = {
+  // url: 'https://prior-dashboard-dev.web.app/timeline',
+  // user: 'test_owner',
+  // pass: '11223344',
+
   url: 'https://prior-dashboard.web.app/login',
   user: 'jatupat.jirapraphai@priorsolution.co.th',
   pass: 'Jame23@#',
 
+  // Create Request
   startDate: {
     day: '18',
     month: 'DECEMBER',
@@ -14,9 +19,16 @@ const data = {
     month: 'DECEMBER',
     year: '2024'
   },
-  halfDay: 'Yes',
+  halfDay: 'No',
   leaveType: 'Business', // Annual , Sick , Business
-  employeeType: 'Outsource' // Permanent , Outsource , Vendor , Trainee เหมือนจะ default แล้ว
+  employeeType: 'Outsource', // Permanent , Outsource , Vendor , Trainee เหมือนจะ default แล้ว
+
+  // Cancel Request
+  cancelDateFrom: {
+    day: '1',
+    month: 'January',
+    year: '2025'
+  }
 };
 
 // Current Date and change format to Month Year
@@ -26,10 +38,13 @@ const currentYear = currentDate.getFullYear();
 const formattedCurrentDate = `${currentMonth} ${currentYear}`
 
 const htmltag = {
+  //Sign In Page
   label: '.head-section .box-name',
   user: '.head-section .input-section .email-section input',
   pass: '.head-section .input-section .password-section',
   signInButton: "button[type='submit']",
+
+  // After Sign In
   LeaveMenu: 'Leaving',
 
   // Leave Page
@@ -37,7 +52,6 @@ const htmltag = {
   createLeave: '.button-box button',
   allCalender: '.tab button:nth-child(1)',
   leaveList: '.tab button:nth-child(2)',
-  myLeaveCalendar: '.tab button:nth-child(3)',
   monthYear: '#AllCalendar h2',
   calendarDays: '#AllCalendar .calendar-container .calendar-grid .date',
   daysWithRequest: '#AllCalendar .calendar-container .calendar-grid .date > div',
@@ -70,7 +84,14 @@ const htmltag = {
   radioButton: 'input[type="radio"]',
   halfDay: '#halfDay',
   endDateDisable: 'button[disabled="true"]',
-  clickOutside: 'body'
+  clickOutside: 'body',
+
+  // My Leave Calendar
+  myLeaveCalendar: '.tab button:nth-child(3)',
+  dateToCancel: '#AllCalendar .calendar-container .calendar-grid .date.current-month.ng-star-inserted span',
+  monthYearOnMyLeave: '#LeaveCalendar .calendar-header h2',
+  nextButtonOnMyLeave: '#LeaveCalendar > .calendar-container > .calendar-header  :nth-child(3)'
+
 
 };
 

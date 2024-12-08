@@ -1,10 +1,9 @@
 /// <reference types="cypress" />
 
 const { data, formattedCurrentDate ,htmltag: htmlTag} = require('./Data.cy.js');
-let totalLeaveRequest = 0
 
 describe('Leave Request', () => {
-  it('Normal Leave Request', ()=>{
+  it('Leave Request', ()=>{
 
     // Open Webpage
     cy.visit(data.url)
@@ -20,10 +19,11 @@ describe('Leave Request', () => {
     // Open leave popup
     cy.get(htmlTag.createLeave).click()
 
-    //Select Start Date
+    // Select Start Date
     const selectDate = (day, targetMonth, targetYear) => {
       cy.get(htmlTag.startDateCalendarPicker).click();
 
+    // Check if the Month Year is what we want
       const navigateToTargetDate = () => {
         cy.get(htmlTag.monthYearOnStartCalendar)
           .invoke('text')
@@ -56,6 +56,7 @@ describe('Leave Request', () => {
       const selectEndDate = (day, targetEndMonth, targetEndYear) => {
         cy.get(htmlTag.endDateCalendarPicker).click();
 
+    // Check if the Month Year is what we want
         const navigateToTarget = () => {
           cy.get(htmlTag.monthYearOnEndCalendar)
             .invoke('text')
@@ -67,7 +68,6 @@ describe('Leave Request', () => {
             });
         };
     
-
         navigateToTarget();
 
         cy.get(htmlTag.dateOnEnd)
@@ -82,6 +82,13 @@ describe('Leave Request', () => {
 
     // Select Leave Type
     cy.contains('label', data.leaveType)
+    .parent() // Move to the parent element
+    .find(htmlTag.radioButton) // Locate the radio button within the parent
+    .check()
+    .should('be.checked');
+
+    // Select Employee Type
+    cy.contains('label', data.employeeType)
     .parent() // Move to the parent element
     .find(htmlTag.radioButton) // Locate the radio button within the parent
     .check()
