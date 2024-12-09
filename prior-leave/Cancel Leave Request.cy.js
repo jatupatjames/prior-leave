@@ -2,6 +2,7 @@
 
 const { data, htmltag: htmlTag } = require('./Data.cy.js');
 const { selectDate } = require('./utils.js'); // Import the reusable function
+import 'cypress-real-events';
 
 describe('Cancel Leave Request', () => {
   it('Cancel Leave Request', () => {
@@ -24,17 +25,15 @@ describe('Cancel Leave Request', () => {
     // Select Month Year to Cancel
     selectDate(htmlTag, data.cancelDateFrom.day, data.cancelDateFrom.month, data.cancelDateFrom.year, null, htmlTag.nextButtonOnMyLeave, htmlTag.dateToCancel, true);
 
-    // Trigger hover effect on the selected date
-    // cy.contains(htmlTag.dateToCancel, data.cancelDateFrom.day)
-    //   .parent()
-    //   .find(htmlTag.nameIcon)
-    //   .trigger('mosueover');
-
-    cy.contains(htmlTag.dateToCancel, data.cancelDateFrom.day)
+    // Trigger hover effect on the selected date and click "X"
+    cy.contains(htmlTag.dateToCancel, new RegExp(`^${data.cancelDateFrom.day}$`))
     .parent()
     .find(htmlTag.nameIcon)
-    .trigger('mouseover')
+    .realHover()
     .find('.delete-icon')
-    .click({force:true}) // mouse over แล้วมันไม่ขึ้น X เลย force click
-  });
+    .click()
+
+    // Click 'Yes'
+    cy.contains('Yes').click()
+  })
 });

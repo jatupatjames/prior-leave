@@ -43,8 +43,15 @@ describe('Leave Request', () => {
       .check()
       .should('be.checked');
 
+    // Select Employee Type
+    cy.contains('label', data.employeeType)
+    .parent()
+    .find(htmlTag.radioButton)
+    .check()
+    .should('be.checked');
+
     // Submit Request
-    // cy.contains('Submit').click()
+    cy.contains('Submit').click()
 
   });
 });
