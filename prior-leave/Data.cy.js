@@ -86,11 +86,12 @@ const htmltag = {
   endDateDisable: 'button[disabled="true"]',
   clickOutside: 'body',
 
-  // My Leave Calendar
-  myLeaveCalendar: '.tab button:nth-child(3)',
-  dateToCancel: '#AllCalendar .calendar-container .calendar-grid .date.current-month.ng-star-inserted span',
-  monthYearOnMyLeave: '#LeaveCalendar .calendar-header h2',
-  nextButtonOnMyLeave: '#LeaveCalendar > .calendar-container > .calendar-header  :nth-child(3)'
+   // My Leave Calendar
+   myLeaveCalendar: '.tab button:nth-child(3)',
+   dateToCancel: '#LeaveCalendar .calendar-container .calendar-grid .date.event-day.ng-star-inserted span',
+   monthYearOnMyLeave: '#LeaveCalendar .calendar-header h2',
+   nextButtonOnMyLeave: '#LeaveCalendar > .calendar-container > .calendar-header  :nth-child(3)',
+   nameIcon: '.p-element.event-dot.ng-star-inserted'
 
 
 };
