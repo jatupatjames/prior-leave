@@ -25,9 +25,16 @@ describe('Cancel Leave Request', () => {
     selectDate(htmlTag, data.cancelDateFrom.day, data.cancelDateFrom.month, data.cancelDateFrom.year, null, htmlTag.nextButtonOnMyLeave, htmlTag.dateToCancel, true);
 
     // Trigger hover effect on the selected date
+    // cy.contains(htmlTag.dateToCancel, data.cancelDateFrom.day)
+    //   .parent()
+    //   .find(htmlTag.nameIcon)
+    //   .trigger('mosueover');
+
     cy.contains(htmlTag.dateToCancel, data.cancelDateFrom.day)
-      .parent()
-      .find(htmlTag.nameIcon)
-      .trigger('mouseover');
+    .parent()
+    .find(htmlTag.nameIcon)
+    .trigger('mouseover')
+    .find('.delete-icon')
+    .click({force:true}) // mouse over แล้วมันไม่ขึ้น X เลย force click
   });
 });
