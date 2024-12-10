@@ -10,25 +10,30 @@ const data = {
 
   // Create Request
   startDate: {
-    day: '9',
+    day: '11',
     month: 'DECEMBER',
     year: '2024'
   },
   endDate: {
-    day: '31',
-    month: 'JANUARY',
-    year: '2025'
+    day: '20',
+    month: 'DECEMBER',
+    year: '2024'
   },
   halfDay: 'No',
   leaveType: 'Business', // Annual , Sick , Business
   employeeType: 'Outsource', // Permanent , Outsource , Vendor , Trainee เหมือนจะ default แล้ว
 
   // Cancel Request
-  cancelDateFrom: {
-    day: '15',
-    month: 'January',
-    year: '2025'
-  }
+  cancelDates: [
+    {day: '11', month: 'December', year: '2024'},
+    {day: '12', month: 'December', year: '2024'},
+    {day: '13', month: 'December', year: '2024'},
+    {day: '16', month: 'December', year: '2024'},
+    {day: '17', month: 'December', year: '2024'},
+    {day: '18', month: 'December', year: '2024'},
+    {day: '19', month: 'December', year: '2024'},
+    {day: '20', month: 'December', year: '2024'},
+  ]
 };
 
 // Current Date and change format to Month Year

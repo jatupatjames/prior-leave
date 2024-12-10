@@ -22,11 +22,12 @@ describe('Cancel Leave Request', () => {
 
     cy.log('Dec' + '#LeaveCalendar .calendar-grid'.length);
 
+    cancelDates.forEach((date) => {
     // Select Month Year to Cancel
-    selectDate(htmlTag, data.cancelDateFrom.day, data.cancelDateFrom.month, data.cancelDateFrom.year, null, htmlTag.nextButtonOnMyLeave, htmlTag.dateToCancel, true);
+    selectDate(htmlTag, data.cancelDates.day, data.cancelDates.month, data.cancelDates.year, null, htmlTag.nextButtonOnMyLeave, htmlTag.dateToCancel, true);
 
     // Trigger hover effect on the selected date and click "X"
-    cy.contains(htmlTag.dateToCancel, new RegExp(`^${data.cancelDateFrom.day}$`))
+    cy.contains(htmlTag.dateToCancel, new RegExp(`^${data.cancelDate.day}$`))
     .parent()
     .find(htmlTag.nameIcon)
     .realHover()
@@ -37,3 +38,4 @@ describe('Cancel Leave Request', () => {
     cy.contains('Yes').click()
   })
 });
+})

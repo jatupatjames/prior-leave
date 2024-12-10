@@ -1,15 +1,35 @@
 /// <reference types="cypress" />
 
 describe('Create Leave API Test', () => {
-  it('should create a leave request successfully', () => {
+  let token;
+
+  beforeEach(() => {
+    // Step 1: Fetch the token from a login endpoint
+    cy.request({
+      method: 'POST',
+      url: 'https://go-api.priorsolution.co.th/dashboard/login/api/v1/token',
+      body: {
+        userId: 'test_owner',
+        password: '11223344',
+      },
+    }).then((getResponse) => {
+      cy.log(JSON.stringify(getResponse.body));
+      // Extract the token from the response body
+      token = getResponse.body.data.token; // Store the token in the higher scope
+      cy.log(`Token: ${token}`); // Log the token to verify
+    });
+  });
+
+  it('Cancel the date that is valid', () => {
+    // Cancel Request
     cy.request({
       method: 'POST',
       url: 'https://go-api.priorsolution.co.th/dashboard/leave-service/api/v1/cancel/leave',
       headers: {
-        'Dashboard': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJ1c2VySWRcIjpcInRlc3Rfb3duZXJcIixcIm9iamVjdHNcIjpbXCJPV05FUlwiXSxcImVtcGxveWVlVHlwZVwiOm51bGx9IiwiaWF0IjoxNzMzNzU3ODQxLCJleHAiOjE3MzM3Nzk0NDF9.RMneLc3oqYhjArerCfaSwpylmKZ8pjRm52ZsxmxJGOoB_Ydm0dpaww2vGBmM2625534xvCnVrH0qCtwV-tgaLQ'
+        Dashboard: `Bearer ${token}`,
       },
       body: {
-        date: ['2024-12-17']
+        date: ['2024-12-20'],
       },
     }).then((response) => {
       // Assertions to verify the response
@@ -18,3 +38,4 @@ describe('Create Leave API Test', () => {
     });
   });
 });
+
