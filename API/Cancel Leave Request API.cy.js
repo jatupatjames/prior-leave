@@ -29,7 +29,7 @@ describe('Create Leave API Test', () => {
         Dashboard: `Bearer ${token}`,
       },
       body: {
-        date: ['2024-12-20'],
+        date: ['2025-01-31'],
       },
     }).then((response) => {
       // Assertions to verify the response

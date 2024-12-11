@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const { data, htmltag: htmlTag } = require('./Data.cy.js');
+const { data, htmltag: htmlTag, htmltag } = require('./Data.cy.js');
 const { cancelDates } = data;
 const { selectDate } = require('./utils.js'); // Import the reusable function
 import 'cypress-real-events';
@@ -24,7 +24,7 @@ describe('Leave Request', () => {
     cy.get(htmlTag.createLeave).click();
 
     // Select Start Date
-    selectDate(htmlTag, data.startDate.day, data.startDate.month, data.startDate.year, htmlTag.startDateCalendarPicker, htmlTag.nextButtonOnStartCalendar, htmlTag.dateOnStart);
+    selectDate(htmlTag, data.startDate.day, data.startDate.month, data.startDate.year, htmlTag.startDateCalendarPicker, null ,htmlTag.nextButtonOnStartCalendar, htmlTag.dateOnStart);
     cy.log('check' + htmlTag.endDateDisable);
 
     cy.wait(2000)
@@ -35,7 +35,7 @@ describe('Leave Request', () => {
       cy.log('Half Day is selected; skipping end date selection.');
     } else {
       // Select End Date
-      selectDate(htmlTag, data.endDate.day, data.endDate.month, data.endDate.year, htmlTag.endDateCalendarPicker, htmlTag.nextButtonOnEndCalendar, htmlTag.dateOnEnd);
+      selectDate(htmlTag, data.endDate.day, data.endDate.month, data.endDate.year, htmlTag.endDateCalendarPicker, null, htmlTag.nextButtonOnEndCalendar, htmlTag.dateOnEnd);
     }
 
     cy.wait(2000)
@@ -56,6 +56,7 @@ describe('Leave Request', () => {
 
     // Submit Request
     cy.contains('Submit').click()
+    cy.wait(2000)
 
   });
 
@@ -75,6 +76,7 @@ describe('Leave Request', () => {
       date.month, 
       date.year, 
       null, 
+      htmltag.prevButtonOnMyLeave,
       htmlTag.nextButtonOnMyLeave, 
       htmlTag.dateToCancel, 
       true);
