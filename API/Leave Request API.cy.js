@@ -25,7 +25,7 @@ describe('Create Leave API Test', () => {
         'Dashboard': `Bearer ${token}`
       },
       body: {
-        date: ['2024-12-15', '2024-12-30'],
+        date: ['2024-11-01', '2024-11-01'],
         employeeType: 'Outsource',
         leaveType: 'Annual',
       },
