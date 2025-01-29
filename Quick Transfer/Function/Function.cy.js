@@ -2,6 +2,7 @@ const { data , inhouseKeyIn } = require('../Data/Data.cy.js');
 
 let refNo;
 
+// ------------------------ Maker Create Inhouse Transaction --------------------------
 // Set screen size and open HTML file
 export function login() {
   cy.viewport(1920, 1080); // Set screen size
@@ -21,18 +22,18 @@ export function clickMenuInhouse() {
   cy.get('.swal2-popup.swal2-modal.swal2-icon-error.swal2-show', { timeout: 10000 })
     .should('be.visible'); // Wait for the error popup
   cy.get('.swal2-confirm.popup-btn.confirm-popup').click(); // Click "ตกลง"
-  cy.contains('โอนเงิน').click(); // Click on the "โอนเงิน" menu
+  cy.get('.krungsri-con-bold.ng-tns-c1069438098-2.contain-sidenav-th > :nth-child(2)').click(); // Click on the "โอนเงิน" menu
 }
 
 // Selects the "Account From" dropdown and chooses the desired account.
 export function selectAccountFrom(){
-  cy.get('div.mat-mdc-form-field-icon-suffix.ng-tns-c3736059725-4.ng-star-inserted img[alt="chevron_down"]').click(); // Open the dropdown
+  cy.get('.mat-mdc-form-field-flex.ng-tns-c3736059725-4 img').click(); // Open the dropdown
   cy.contains(inhouseKeyIn.accountFrom).click(); // Select account from
 }
 
 // Selects the "Account To" dropdown and chooses the desired account.
 export function selectAccountTo(){
-  cy.get('div.mat-mdc-form-field-icon-suffix.ng-tns-c3736059725-6.ng-star-inserted img[alt="chevron_down"]').click(); // Open the dropdown
+  cy.get('.mat-mdc-form-field-flex.ng-tns-c3736059725-6 img').click(); // Open the dropdown
   cy.contains(inhouseKeyIn.accountTo).click(); // Select account to
 }
 
@@ -43,26 +44,25 @@ export function amount(){
 
 // Proceeds to the next step in the transaction process.
 export function clickNext(){
-  cy.get('button[class="btn btn-lg btn-primary w-[175px] ml-auto"]').click() // Click "Next"
+  cy.get('.btn').click() // Click "Next"
 }
 
 // Verifies details on the preview screen.
 export function verifyPreviewScreen() {
   // Verify account from
-  cy.get("div[class = 'flex flex-col grow gap-2 mb-2 self-start'] div[class='flex flex-row w-full gap-4 items-center rounded-lg bg-[#F1EFEF] p-4'] div[class='flex flex-col w-full'] div p span")
+  cy.get(".flex.flex-col.grow.gap-2.mb-2.self-start > :nth-child(2) span", { timeout: 10000 })
     .should('contain', 
     inhouseKeyIn.accountFrom
   );
 
   // Verify account to
-  cy.get("div[class = 'flex flex-col grow gap-2 mb-2'] span")
+  cy.get(" .flex.flex-row.items-center.rounded-3xl.p-4 > :nth-child(3) span")
     .should('contain', 
     inhouseKeyIn.accountTo
   );
 
   // Verify amount
-  cy.get("div[class='grid grid-cols-2 mt-4 gap-4'] .grid.gap-4 .thongterm-bold.text-data")
-    .first()
+  cy.get(".grid.grid-cols-2.mt-4.gap-4 > :nth-child(1) > :nth-child(2)")
     .should('contain', 
     inhouseKeyIn.amount
   );
@@ -80,16 +80,18 @@ export function verifySuccessScreen() {
   .and('be.visible')
   .and('not.be.empty') // Ensures the element is not empty
   .invoke('text')
-  .then((refNo) => {
-    cy.log('Reference Number: ' +refNo); // Logs the reference number
-    cy.wrap(refNo).as('referenceNumber'); // Store as alias
+  .then((referenceNo) => {
+    cy.log('Reference Number: ' +referenceNo); // Logs the reference number
+    // cy.wrap(referenceNo).as('referenceNumber'); // Store as alias
+    refNo = referenceNo
   });
-  cy.get('@referenceNumber').then((referenceNumber) => {
-    refNo = referenceNumber
-    cy.log('RefNo : ',refNo)
-  })
+  /* cy.get('@referenceNumber').then((referenceNumber) => {
+     refNo = referenceNumber // Store reference number to refNo
+     cy.log('RefNo : ',refNo)
+  }) */
 }
 
+// ------------------------ Checker Approve Inhouse Transaction That Maker Just Submitted --------------------------
 // Click menu "รายการรออนุมัติ"
 export function clickMenuApprove() {
   cy.get('.swal2-popup.swal2-modal.swal2-icon-error.swal2-show', { timeout: 10000 })
@@ -158,7 +160,7 @@ export function verifyTransactionCompletion(){
       cy.log('Rows exist in the table');
       cy.get('table tbody tr').first().find('input[type="checkbox"]').should('be.disabled')
     } else {
-      cy.log('No rows in the table');
+      cy.log('The transaction has been approved by all required checkers.');
     }
   });
 };
